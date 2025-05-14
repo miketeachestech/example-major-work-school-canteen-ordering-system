@@ -8,7 +8,7 @@ from flask_login import (
 )
 
 from models import db, User, Item, Order, OrderStatus
-from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm
+from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm, OrderForm
 from config import Config
 from seed_db import seed_all
 import os
@@ -377,6 +377,59 @@ def store():
 
     items = query.order_by(Item.name).all()
     return render_template("store.html", items=items)
+
+@app.route("/order/<int:item_id>", methods=["GET", "POST"])
+@login_required
+def order_item(item_id):
+    if current_user.is_staff:
+        flash("Only students can place orders.", "danger")
+        return redirect(url_for("dashboard"))
+
+    item = Item.query.get_or_404(item_id)
+
+    if item.quantity <= 0:
+        flash("This item is currently out of stock.", "warning")
+        return redirect(url_for("store"))
+
+    form = OrderForm()
+    if form.validate_on_submit():
+        qty = form.quantity.data
+
+        if qty > item.quantity:
+            flash(f"Only {item.quantity} of '{item.name}' available.", "danger")
+        else:
+            total_cost = item.price * qty
+            if current_user.credit < total_cost:
+                flash("Insufficient credit to place this order.", "danger")
+            else:
+                # Update stock and credit
+                item.quantity -= qty
+                current_user.credit -= total_cost
+
+                order = Order(
+                    user_id=current_user.id,
+                    item_id=item.id,
+                    quantity=qty,
+                    total_cost=total_cost,
+                    status=OrderStatus.AWAITING.value
+                )
+
+                db.session.add(order)
+                db.session.commit()
+                flash("Order placed successfully!", "success")
+                return redirect(url_for("store"))
+
+    return render_template("order_item.html", item=item, form=form)
+
+@app.route("/my-orders")
+@login_required
+def my_orders():
+    if current_user.is_staff:
+        flash("Staff accounts do not place orders.", "info")
+        return redirect(url_for("dashboard"))
+
+    orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.timestamp.desc()).all()
+    return render_template("my_orders.html", orders=orders)
 
 
 if __name__ == "__main__":

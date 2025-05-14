@@ -59,3 +59,10 @@ class ItemForm(FlaskForm):
     is_vegetarian = BooleanField("Vegetarian")
     image = FileField("Item Image", validators=[FileAllowed(["jpg", "jpeg", "png"], "Images only!")])
     submit = SubmitField("Save Item")
+
+class OrderForm(FlaskForm):
+    quantity = IntegerField("Quantity", validators=[
+        DataRequired(),
+        NumberRange(min=1, message="Quantity must be at least 1")
+    ])
+    submit = SubmitField("Place Order")

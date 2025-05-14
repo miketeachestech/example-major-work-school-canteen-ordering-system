@@ -48,7 +48,10 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('store') }}">Store</a>
+            <a class="nav-link" href="{{ url_for('store') }}">View Store</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('my_orders') }}">My Orders</a>
           </li>
           {% endif %}
           <li class="nav-item">

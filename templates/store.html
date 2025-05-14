@@ -41,8 +41,7 @@
           Available: {{ item.quantity }}<br>
           {% if item.is_vegetarian %}<span class="badge bg-success">Vegetarian</span>{% endif %}
         </p>
-        <!-- Placeholder: add order button later -->
-        <a href="#" class="btn btn-sm btn-outline-success disabled">Order (coming soon)</a>
+        <a href="{{ url_for('order_item', item_id=item.id) }}" class="btn btn-sm btn-success">Order</a>
       </div>
     </div>
   </div>
