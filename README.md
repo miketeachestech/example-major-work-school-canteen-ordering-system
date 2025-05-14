@@ -19,7 +19,7 @@ To be added.
 - [ ] Prevent order placement if user lacks sufficient credit
 
 ### Staff Features
-- [ ] Item management:
+- [x] Item management:
   - Add new items
   - Edit existing items
   - Delete items

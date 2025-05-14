@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Manage Orders{% endblock %}
+{% block content %}
+
+<h2>Active Orders</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in active_orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.email }}</td>
+            <td>{{ order.item.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>${{ "{:.2f}".format(order.total_cost) }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+            <td>
+                <form method="POST" style="display:inline;">
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                    <input type="hidden" name="action" value="advance">
+                    <button class="btn btn-sm btn-primary" type="submit">Advance</button>
+                </form>
+
+                <form method="POST" style="display:inline;" onsubmit="return confirm('Cancel this order?');">
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                    <input type="hidden" name="action" value="cancel">
+                    <button class="btn btn-sm btn-danger" type="submit">Cancel</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2 class="mt-5">Completed or Cancelled Orders</h2>
+<table class="table table-bordered table-secondary">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in closed_orders_pagination.items %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.email }}</td>
+            <td>{{ order.item.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>${{ "{:.2f}".format(order.total_cost) }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<nav aria-label="Closed Order Pagination">
+    <ul class="pagination justify-content-center">
+        {% if closed_orders_pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link"
+                href="{{ url_for('manage_orders', page=closed_orders_pagination.prev_num) }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for p in range(1, closed_orders_pagination.pages + 1) %}
+        <li class="page-item {% if closed_orders_pagination.page == p %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('manage_orders', page=p) }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+
+        {% if closed_orders_pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('manage_orders', page=closed_orders_pagination.next_num) }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}

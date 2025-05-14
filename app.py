@@ -7,13 +7,14 @@ from flask_login import (
     current_user,
 )
 
-from models import db, User, Item
+from models import db, User, Item, Order, OrderStatus
 from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm
 from config import Config
 from seed_db import seed_all
 import os
 import uuid
 from werkzeug.utils import secure_filename
+from helpers import get_next_status
 
 
 app = Flask(__name__)
@@ -266,6 +267,52 @@ def delete_item(item_id):
     db.session.commit()
     flash("Item deleted successfully.", "success")
     return redirect(url_for("items"))
+
+
+@app.route("/orders", methods=["GET", "POST"])
+@login_required
+def manage_orders():
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    # Split orders
+    active_statuses = {
+        OrderStatus.AWAITING.value,
+        OrderStatus.CONFIRMED.value,
+        OrderStatus.PREPARING.value,
+        OrderStatus.READY.value
+    }
+
+    active_orders = Order.query.filter(Order.status.in_(active_statuses)).order_by(Order.timestamp.desc()).all()
+
+    # Pagination
+    page = request.args.get("page", 1, type=int)
+    closed_statuses = [OrderStatus.COMPLETED.value, OrderStatus.CANCELLED.value]
+    closed_orders_pagination = Order.query.filter(
+        Order.status.in_(closed_statuses)
+    ).order_by(Order.timestamp.desc()).paginate(page=page, per_page=5)
+
+    if request.method == "POST":
+        order_id = int(request.form["order_id"])
+        action = request.form["action"]
+        order = Order.query.get_or_404(order_id)
+
+        if action == "advance":
+            next_status = get_next_status(order.status)
+            if order.status != next_status:
+                order.status = next_status
+                flash(f"Order #{order.id} advanced to '{next_status}'.", "success")
+        elif action == "cancel" and order.status != OrderStatus.CANCELLED.value:
+            order.status = OrderStatus.CANCELLED.value
+            order.user.credit += order.total_cost
+            order.item.quantity += order.quantity
+            flash(f"Order #{order.id} cancelled. Credit refunded and stock restored.", "warning")
+
+        db.session.commit()
+        return redirect(url_for("manage_orders", page=page))
+
+    return render_template("manage_orders.html", active_orders=active_orders, closed_orders_pagination=closed_orders_pagination)
 
 
 if __name__ == "__main__":
