@@ -120,10 +120,10 @@ def account():
 @login_required
 def users():
     """
-    Admin-only view of all registered users.
-    - Redirects non-admins back to dashboard.
+    Staff-only view of all registered users.
+    - Redirects non-staffs back to dashboard.
     """
-    if not current_user.is_admin:
+    if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
 
@@ -139,6 +139,6 @@ if __name__ == "__main__":
     """
     with app.app_context():
         db.create_all()  # Create tables if they don't exist
-        seed_default_users()  # Add default admin and regular users
+        seed_default_users()  # Add default staff and regular users
 
     app.run(debug=True)  # Start the server with debug mode (auto-reloads on changes)

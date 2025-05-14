@@ -1,7 +1,7 @@
 from models import db, User
 
 
-def create_user(email, password, is_admin=False):
+def create_user(email, password, is_staff=False):
     """
     Create a user if one with the given email doesn't already exist.
     This prevents duplicate users and is useful for seeding.
@@ -13,7 +13,7 @@ def create_user(email, password, is_admin=False):
         return existing
 
     # If not, create a new user and hash the password
-    user = User(email=email, is_admin=is_admin)
+    user = User(email=email, is_staff=is_staff)
     user.set_password(password)  # Securely hash the password
 
     # Save the new user to the database
@@ -27,9 +27,9 @@ def create_user(email, password, is_admin=False):
 def seed_default_users():
     """
     Add default users to the database for testing/demo purposes.
-    - One admin user
-    - One regular user
+    - One staff user
+    - One student user
     This function is called when the app first starts.
     """
-    create_user("admin@example.com", "admin123", is_admin=True)
-    create_user("user@example.com", "user123", is_admin=False)
+    create_user("bob_staff@school.com", "bob123", is_staff=True)
+    create_user("alice_student@school.com", "alice123", is_staff=False)

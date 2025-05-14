@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}User List{% endblock %}
+{% block title %}CanteenEats - All Users{% endblock %}
 {% block content %}
 <h2>All Users</h2>
 <table class="table table-bordered">
@@ -7,7 +7,7 @@
     <tr>
       <th>ID</th>
       <th>Email</th>
-      <th>Admin</th>
+      <th>Type</th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +15,7 @@
     <tr>
       <td>{{ user.id }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
+      <td>{{ 'Staff' if user.is_staff else 'Student' }}</td>
     </tr>
     {% endfor %}
   </tbody>
