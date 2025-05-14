@@ -10,7 +10,7 @@ from flask_login import (
 from models import db, User
 from forms import RegisterForm, LoginForm, EditAccountForm
 from config import Config
-from seed_db import seed_default_users
+from seed_db import seed_all
 
 app = Flask(__name__)
 app.config.from_object(Config)  # Load settings like SECRET_KEY and DB path
@@ -139,6 +139,6 @@ if __name__ == "__main__":
     """
     with app.app_context():
         db.create_all()  # Create tables if they don't exist
-        seed_default_users()  # Add default staff and regular users
+        seed_all()  # Add default staff and regular users
 
     app.run(debug=True)  # Start the server with debug mode (auto-reloads on changes)
