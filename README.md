@@ -4,12 +4,6 @@ To be added.
 
 ## To Do
 
-### Model Enhancements
-- [x] Add `Item` model
-- [x] Add `Order` model
-- [x] Add `credit` field to `User` model
-- [ ] Create order status constants or enum for consistency
-
 ### Student Features
 - [ ] Store page to display all available items (quantity > 0) with filters:
   - Name
@@ -30,7 +24,7 @@ To be added.
   - Edit existing items
   - Delete items
   - Validate price and quantity
-- [ ] Credit management:
+- [x] Credit management:
   - Add funds to student accounts
   - Only allow positive credit additions
 - [ ] Order management:
@@ -62,15 +56,3 @@ To be added.
 - [ ] Handle edge cases (e.g., ordering with zero stock or no credit)
 - [ ] Test full user journey for both roles
 
-### Future Features (Out of Scope)
-- [ ] Estimated wait times for orders
-- [ ] Cart system for multi-item orders
-- [ ] Exportable reports (CSV or PDF)
-
-## Suggested Implementation Order
-1. Finalize models and database setup
-2. Implement store view and student order placement
-3. Add item and order management for staff
-4. Enforce all business rules
-5. Finalize forms and frontend UI
-6. Conduct thorough testing and cleanup

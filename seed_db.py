@@ -9,7 +9,7 @@ def create_user(email, password, is_staff=False):
         print(f"User '{email}' already exists.")
         return existing
 
-    user = User(email=email, is_staff=is_staff, credit=Decimal("20.00"))  # Add starting credit
+    user = User(email=email, is_staff=is_staff, credit=Decimal("100.00"))  # Add starting credit
     user.set_password(password)
     db.session.add(user)
     db.session.commit()

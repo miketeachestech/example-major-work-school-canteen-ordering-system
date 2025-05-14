@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from models import User
 
@@ -50,3 +50,10 @@ class CreditForm(FlaskForm):
     email = StringField("Student Email", validators=[DataRequired(), Email()])
     amount = DecimalField("Credit Amount", validators=[DataRequired(), NumberRange(min=0.01, message="Amount must be positive")])
     submit = SubmitField("Add Credit")
+
+class ItemForm(FlaskForm):
+    name = StringField("Item Name", validators=[DataRequired()])
+    price = DecimalField("Price", validators=[DataRequired(), NumberRange(min=0)])
+    quantity = IntegerField("Quantity", validators=[DataRequired(), NumberRange(min=0)])
+    is_vegetarian = BooleanField("Vegetarian")
+    submit = SubmitField("Save Item")

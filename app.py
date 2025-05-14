@@ -7,8 +7,8 @@ from flask_login import (
     current_user,
 )
 
-from models import db, User
-from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm
+from models import db, User, Item
+from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm
 from config import Config
 from seed_db import seed_all
 
@@ -151,6 +151,71 @@ def credit():
             return redirect(url_for("credit"))
     return render_template("credit.html", form=form)
 
+@app.route("/items")
+@login_required
+def items():
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    all_items = Item.query.all()
+    return render_template("items.html", items=all_items)
+
+
+@app.route("/items/add", methods=["GET", "POST"])
+@login_required
+def add_item():
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    form = ItemForm()
+    if form.validate_on_submit():
+        item = Item(
+            name=form.name.data,
+            price=form.price.data,
+            quantity=form.quantity.data,
+            is_vegetarian=form.is_vegetarian.data,
+        )
+        db.session.add(item)
+        db.session.commit()
+        flash("Item added successfully.", "success")
+        return redirect(url_for("items"))
+    return render_template("item_form.html", form=form, action="Add")
+
+
+@app.route("/items/<int:item_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_item(item_id):
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    item = Item.query.get_or_404(item_id)
+    form = ItemForm(obj=item)
+    if form.validate_on_submit():
+        item.name = form.name.data
+        item.price = form.price.data
+        item.quantity = form.quantity.data
+        item.is_vegetarian = form.is_vegetarian.data
+        db.session.commit()
+        flash("Item updated successfully.", "success")
+        return redirect(url_for("items"))
+    return render_template("item_form.html", form=form, action="Edit")
+
+
+@app.route("/items/<int:item_id>/delete", methods=["POST"])
+@login_required
+def delete_item(item_id):
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    item = Item.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+    flash("Item deleted successfully.", "success")
+    return redirect(url_for("items"))
 
 if __name__ == "__main__":
     """
