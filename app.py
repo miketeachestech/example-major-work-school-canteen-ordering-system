@@ -493,7 +493,14 @@ if __name__ == "__main__":
     This block runs only when this file is executed directly (not imported), i.e. "python app.py".
     """
     with app.app_context():
-        db.create_all()  # Create tables if they don't exist
-        seed_all()  # Add default staff and regular users
+        reset_db_on_launch = Config.RESET_DB_ON_LAUNCH
+        if reset_db_on_launch:
+            db.drop_all()
+            db.create_all()
+            seed_all()
+            print("Database was reset successfully.")
+        else:
+            db.create_all()
+            print("Database reset skipped.")
 
-    app.run(debug=True)  # Start the server with debug mode (auto-reloads on changes)
+    app.run(debug=True)
