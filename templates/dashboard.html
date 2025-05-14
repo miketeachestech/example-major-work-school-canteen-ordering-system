@@ -1,0 +1,21 @@
+<!--
+  This template extends base.html, meaning it reuses the layout from base.html
+  Only the content inside the block sections will be different.
+-->
+{% extends "base.html" %}
+
+<!--
+  This block replaces the <title> in base.html with "Dashboard".
+  This shows up in the browser tab.
+-->
+{% block title %}Dashboard{% endblock %}
+
+<!--
+  This block fills in the main page content section defined in base.html.
+  Anything in here will appear inside the <div class="container"> in base.html.
+-->
+{% block content %}
+<!-- A heading welcoming the user. current_user is the logged-in user provided by Flask-Login -->
+<h2>Welcome, {{ current_user.email }}!</h2>
+<p>This is your dashboard.</p>
+{% endblock %}

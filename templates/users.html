@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}User List{% endblock %}
+{% block content %}
+<h2>All Users</h2>
+<!-- 
+  This table uses Bootstrap styling (table and table-bordered).
+  It displays user data: ID, email, and whether they're an admin.
+-->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 
+      This Jinja loop goes through each user in the 'users' list passed from app.py.
+      For each user, it creates a new row in the table with their data.
+    -->
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <!-- Show 'Yes' if user is admin, otherwise 'No' -->
+      <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

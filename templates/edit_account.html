@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Account{% endblock %}
+
+{% block content %}
+  <h2>Edit Account</h2>
+
+  <!-- 
+    This form lets the user update their account info.
+    The method="POST" sends the data securely to the server.
+  -->
+  <form method="POST">
+
+    <!-- 
+      Adds hidden fields for CSRF protection and form tracking.
+      Automatically included by Flask-WTF.
+    -->
+    {{ form.hidden_tag() }}
+
+    <!-- 
+      This section shows a label and input field for the user's email.
+      "form-control" is a Bootstrap class for styling.
+    -->
+    <div class="mb-3">
+      {{ form.email.label }}
+      {{ form.email(class="form-control") }}
+    </div>
+
+    <!-- 
+      Submit button — when clicked, the form data is sent to the server.
+    -->
+    <button type="submit" class="btn btn-success">Update</button>
+  </form>
+{% endblock %}
