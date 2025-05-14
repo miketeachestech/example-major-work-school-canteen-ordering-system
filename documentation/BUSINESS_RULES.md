@@ -31,7 +31,7 @@
 
 3. **Order Oversight**
    - Staff can view all orders placed by students.
-   - Orders can be marked as **Completed** or **Cancelled**.
+   - Orders can be marked as **Awaiting Confirmation**, **Confirmed**, **Being Prepared**, **Ready For Pickup**, **Completed** or **Cancelled**.
    - Cancelling an order refunds the full cost to the student’s credit and returns quantity to the item.
 
 4. **Account Permissions**
@@ -53,7 +53,7 @@
 
 3. **Order Status**
    - Students can view their own orders.
-   - Each order displays its status: **Pending**, **Completed**, or **Cancelled**.
+   - Each order displays its status: **Awaiting Confirmation**, **Confirmed**, **Being Prepared**, **Ready For Pickup**, **Completed** or **Cancelled**.
    - If a student wishes to cancel an order, they should ask a staff member to do so. 
 
 4. **Account Control**
@@ -66,6 +66,11 @@
 - **Credit Format**: All credit and item prices are stored as decimal values (e.g., 10.50).
 - **Order Structure**: Each order includes item(s), quantity, total cost, timestamp, and status.
 - **Order Status Flow**:
-  - New orders start as **Pending**.
-  - Staff update status to **Completed** or **Cancelled**.
+  - New orders start as **Awaiting Confirmation**.
+  - Staff update status to **Confirmed**, **Being Prepared**, **Ready For Pickup**, **Completed** or **Cancelled**.
   - Refunds are only processed on cancellations.
+
+## Out Of Scope / Future Improvements
+
+- **Cart**: Students can add multiple items to a cart and then place one order for the cart's contents.
+- **Estimated Wait Time**: Staff can provide an estimated wait time when the order is changed to **Confirmed**.
