@@ -2,7 +2,7 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
-<h2 class="mb-3">Welcome, {{ current_user.email.split('@')[0] }}!</h2>
+<h2 class="mb-3">Welcome, {{ current_user.email.split('@')[0].upper() }}!</h2>
 
 {% if current_user.is_staff %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
