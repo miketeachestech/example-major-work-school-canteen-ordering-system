@@ -19,18 +19,19 @@
       <td>{{ item.name }}</td>
       <td>
         {% if item.image_filename %}
-            <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}" width="60" height="60">
+        <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}" width="60" height="60">
         {% else %}
-            No image
+        No image
         {% endif %}
-        </td>
+      </td>
       <td>${{ "{:.2f}".format(item.price) }}</td>
       <td>{{ item.quantity }}</td>
       <td>{{ 'Yes' if item.is_vegetarian else 'No' }}</td>
       <td>
         <a href="{{ url_for('edit_item', item_id=item.id) }}" class="btn btn-sm btn-warning">Edit</a>
         <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST" style="display:inline;">
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this item?')">Delete</button>
+          <button type="submit" class="btn btn-sm btn-danger"
+            onclick="return confirm('Delete this item?')">Delete</button>
         </form>
       </td>
     </tr>

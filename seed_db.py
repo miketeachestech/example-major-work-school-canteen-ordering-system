@@ -3,6 +3,7 @@ from decimal import Decimal
 import os
 import shutil
 
+
 def create_user(email, password, is_staff=False):
     """Create a user if one with the given email doesn't already exist."""
     existing = User.query.filter_by(email=email).first()
@@ -10,7 +11,9 @@ def create_user(email, password, is_staff=False):
         print(f"User '{email}' already exists.")
         return existing
 
-    user = User(email=email, is_staff=is_staff, credit=Decimal("100.00"))  # Add starting credit
+    user = User(
+        email=email, is_staff=is_staff, credit=Decimal("100.00")
+    )  # Add starting credit
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
@@ -26,10 +29,7 @@ def create_item(name, price, quantity, is_vegetarian=False):
         return existing
 
     item = Item(
-        name=name,
-        price=Decimal(price),
-        quantity=quantity,
-        is_vegetarian=is_vegetarian
+        name=name, price=Decimal(price), quantity=quantity, is_vegetarian=is_vegetarian
     )
     db.session.add(item)
     db.session.commit()
@@ -57,12 +57,14 @@ def create_order(user, item, quantity, status=OrderStatus.AWAITING):
         item_id=item.id,
         quantity=quantity,
         total_cost=total_cost,
-        status=status.value
+        status=status.value,
     )
 
     db.session.add(order)
     db.session.commit()
-    print(f"Order created: {user.email} ordered {quantity} x {item.name} ({status.value})")
+    print(
+        f"Order created: {user.email} ordered {quantity} x {item.name} ({status.value})"
+    )
     return order
 
 
@@ -75,7 +77,6 @@ def seed_default_users():
     student3 = create_user("maggie@school.com", "maggie123", is_staff=False)
 
     return [staff1, staff2], [student1, student2, student3]
-
 
 
 def seed_items():
@@ -93,14 +94,12 @@ def seed_items():
 
     item5 = create_item("Can of Bepis", "1.75", 10, is_vegetarian=True)
     item5.image_filename = "bepis_can.png"
-    
+
     item6 = create_item("Hot Chips", "3.50", 5, is_vegetarian=True)
     item6.image_filename = "hot_chips.png"
-    
 
     db.session.commit()
     return [item1, item2, item3, item4, item5, item6]
-
 
 
 def seed_orders(students, items):
@@ -110,12 +109,11 @@ def seed_orders(students, items):
     create_order(lisa, items[2], 2, status=OrderStatus.CONFIRMED)
     create_order(lisa, items[1], 1, status=OrderStatus.READY)
 
-    create_order(bart, items[3], 2, status=OrderStatus.CANCELLED) 
-    create_order(bart, items[5], 1, status=OrderStatus.AWAITING) 
+    create_order(bart, items[3], 2, status=OrderStatus.CANCELLED)
+    create_order(bart, items[5], 1, status=OrderStatus.AWAITING)
 
-    create_order(maggie, items[4], 3, status=OrderStatus.PREPARING) 
+    create_order(maggie, items[4], 3, status=OrderStatus.PREPARING)
     create_order(maggie, items[0], 1, status=OrderStatus.READY)
-
 
 
 def seed_all():
@@ -129,8 +127,15 @@ def seed_all():
     dest_dir = os.path.join(base_dir, "static", "uploads")
     os.makedirs(dest_dir, exist_ok=True)
 
-    for filename in ["veggie_sandwich.png", "chicken_wrap.png", "fruit_cup.png", 
-                     "conk_can.png", "bepis_can.png", "hot_chips.png", "default.png"]:
+    for filename in [
+        "veggie_sandwich.png",
+        "chicken_wrap.png",
+        "fruit_cup.png",
+        "conk_can.png",
+        "bepis_can.png",
+        "hot_chips.png",
+        "default.png",
+    ]:
         src = os.path.join(src_dir, filename)
         dest = os.path.join(dest_dir, filename)
         if not os.path.exists(dest):
@@ -139,5 +144,3 @@ def seed_all():
                 print(f"Copied {filename} to uploads.")
             except FileNotFoundError:
                 print(f"WARNING: {filename} not found in examples folder.")
-
-

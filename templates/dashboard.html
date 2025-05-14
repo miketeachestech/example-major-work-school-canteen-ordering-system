@@ -5,117 +5,117 @@
 <h2 class="mb-3">Welcome, {{ current_user.email.split('@')[0] }}!</h2>
 
 {% if current_user.is_staff %}
-  <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-3 g-4">
 
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-user-cog fa-2x mb-3 text-primary"></i>
-          <h5 class="card-title">Your Account</h5>
-          <p class="card-text">Change your password here.</p>
-          <a href="{{ url_for('account') }}" class="btn btn-primary">Manage Account</a>
-        </div>
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-user-cog fa-2x mb-3 text-primary"></i>
+        <h5 class="card-title">Your Account</h5>
+        <p class="card-text">Change your password here.</p>
+        <a href="{{ url_for('account') }}" class="btn btn-primary">Manage Account</a>
       </div>
     </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-coins fa-2x mb-3 text-success"></i>
-          <h5 class="card-title">Credit Management</h5>
-          <p class="card-text">Top up student accounts with credit.</p>
-          <a href="{{ url_for('credit') }}" class="btn btn-success">Issue Credit</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-users fa-2x mb-3 text-secondary"></i>
-          <h5 class="card-title">User Directory</h5>
-          <p class="card-text">View and manage all user accounts.</p>
-          <a href="{{ url_for('users') }}" class="btn btn-secondary">View Users</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-utensils fa-2x mb-3 text-warning"></i>
-          <h5 class="card-title">Menu</h5>
-          <p class="card-text">Add, edit, or remove items from the menu.</p>
-          <a href="{{ url_for('items') }}" class="btn btn-warning">Manage Items</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-receipt fa-2x mb-3 text-info"></i>
-          <h5 class="card-title">Orders</h5>
-          <p class="card-text">Track and update all student orders.</p>
-          <a href="{{ url_for('manage_orders') }}" class="btn btn-info">Manage Orders</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-sign-out-alt fa-2x mb-3 text-danger"></i>
-          <h5 class="card-title">Logout</h5>
-          <p class="card-text">Log out of your admin session.</p>
-          <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-coins fa-2x mb-3 text-success"></i>
+        <h5 class="card-title">Credit Management</h5>
+        <p class="card-text">Top up student accounts with credit.</p>
+        <a href="{{ url_for('credit') }}" class="btn btn-success">Issue Credit</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-users fa-2x mb-3 text-secondary"></i>
+        <h5 class="card-title">User Directory</h5>
+        <p class="card-text">View and manage all user accounts.</p>
+        <a href="{{ url_for('users') }}" class="btn btn-secondary">View Users</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-utensils fa-2x mb-3 text-warning"></i>
+        <h5 class="card-title">Menu</h5>
+        <p class="card-text">Add, edit, or remove items from the menu.</p>
+        <a href="{{ url_for('items') }}" class="btn btn-warning">Manage Items</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-receipt fa-2x mb-3 text-info"></i>
+        <h5 class="card-title">Orders</h5>
+        <p class="card-text">Track and update all student orders.</p>
+        <a href="{{ url_for('manage_orders') }}" class="btn btn-info">Manage Orders</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-sign-out-alt fa-2x mb-3 text-danger"></i>
+        <h5 class="card-title">Logout</h5>
+        <p class="card-text">Log out of your admin session.</p>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 {% else %}
-  <div class="alert alert-info mt-3">
-    Your current credit: <strong>${{ "{:.2f}".format(current_user.credit) }}</strong>
+<div class="alert alert-info mt-3">
+  Your current credit: <strong>${{ "{:.2f}".format(current_user.credit) }}</strong>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-user-cog fa-2x mb-3 text-primary"></i>
+        <h5 class="card-title">Your Account</h5>
+        <p class="card-text">Change your password here.</p>
+        <a href="{{ url_for('account') }}" class="btn btn-primary">Manage Account</a>
+      </div>
+    </div>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-user-cog fa-2x mb-3 text-primary"></i>
-          <h5 class="card-title">Your Account</h5>
-          <p class="card-text">Change your password here.</p>
-          <a href="{{ url_for('account') }}" class="btn btn-primary">Manage Account</a>
-        </div>
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-store fa-2x mb-3 text-success"></i>
+        <h5 class="card-title">Browse Store</h5>
+        <p class="card-text">Browse and order available canteen items.</p>
+        <a href="{{ url_for('store') }}" class="btn btn-success">Browse Store</a>
       </div>
     </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-store fa-2x mb-3 text-success"></i>
-          <h5 class="card-title">Browse Store</h5>
-          <p class="card-text">Browse and order available canteen items.</p>
-          <a href="{{ url_for('store') }}" class="btn btn-success">Browse Store</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
-        <div class="card-body text-center">
-          <i class="fas fa-receipt fa-2x mb-3 text-warning"></i>
-          <h5 class="card-title">View Orders</h5>
-          <p class="card-text">View the status of your recent orders.</p>
-          <a href="{{ url_for('my_orders') }}" class="btn btn-warning">View Orders</a>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+      <div class="card-body text-center">
+        <i class="fas fa-receipt fa-2x mb-3 text-warning"></i>
+        <h5 class="card-title">View Orders</h5>
+        <p class="card-text">View the status of your recent orders.</p>
+        <a href="{{ url_for('my_orders') }}" class="btn btn-warning">View Orders</a>
+      </div>
+    </div>
+  </div>
+
+</div>
 {% endif %}
 
 {% endblock %}

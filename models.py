@@ -5,6 +5,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 
+
 class OrderStatus(Enum):
     AWAITING = "Awaiting Confirmation"
     CONFIRMED = "Confirmed"
@@ -67,7 +68,9 @@ class Order(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     total_cost = db.Column(db.Numeric(10, 2), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(50), default=OrderStatus.AWAITING.value, nullable=False)
+    status = db.Column(
+        db.String(50), default=OrderStatus.AWAITING.value, nullable=False
+    )
 
     def set_status(self, new_status: OrderStatus):
         self.status = new_status.value

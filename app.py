@@ -16,12 +16,13 @@ from forms import (
     ItemForm,
     OrderForm,
 )
+
 from config import Config
 from seed_db import seed_all
-import os
-import uuid
 from werkzeug.utils import secure_filename
 from helpers import get_next_status
+import os
+import uuid
 
 
 app = Flask(__name__)
@@ -114,6 +115,10 @@ def dashboard():
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
+    """
+    A form to change the logged in user's password. 
+    Can be extended to other account management features in future.
+    """
     form = EditAccountForm()
 
     if form.validate_on_submit():
@@ -133,7 +138,7 @@ def account():
 def users():
     """
     Staff-only view of all registered users.
-    - Redirects non-staffs back to dashboard.
+    Redirects non-staffs back to dashboard.
     """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
@@ -147,6 +152,10 @@ def users():
 @app.route("/credit", methods=["GET", "POST"])
 @login_required
 def credit():
+    """
+    Staff-only page that issues credit to students.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -170,6 +179,10 @@ def credit():
 @app.route("/items")
 @login_required
 def items():
+    """
+    Staff-only page for manging items in the store.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -181,6 +194,10 @@ def items():
 @app.route("/items/add", methods=["GET", "POST"])
 @login_required
 def add_item():
+    """
+    Staff-only page for adding a new item to the store.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -212,6 +229,10 @@ def add_item():
 @app.route("/items/<int:item_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_item(item_id):
+    """
+    Staff-only page for editing items in the store.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -253,6 +274,7 @@ def edit_item(item_id):
 
 @app.errorhandler(413)
 def file_too_large(error):
+    """Handles the situation when a staff member tries to upload an image greater than 2MB."""
     flash("File is too large (max 2MB).", "danger")
     return redirect(request.referrer or url_for("dashboard"))
 
@@ -260,6 +282,10 @@ def file_too_large(error):
 @app.route("/items/<int:item_id>/delete", methods=["POST"])
 @login_required
 def delete_item(item_id):
+    """
+    Staff-only action for deleting items.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -281,6 +307,10 @@ def delete_item(item_id):
 @app.route("/orders", methods=["GET", "POST"])
 @login_required
 def manage_orders():
+    """
+    Staff-only page for viewing all orders.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -340,6 +370,10 @@ def manage_orders():
 @app.route("/users/<int:user_id>/promote", methods=["POST"])
 @login_required
 def promote_user(user_id):
+    """
+    Staff-only action for promoting student accounts to staff accounts.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -359,6 +393,10 @@ def promote_user(user_id):
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
 @login_required
 def delete_user(user_id):
+    """
+    Staff-only action for deleting users from the system.
+    Redirects non-staffs back to dashboard.
+    """
     if not current_user.is_staff:
         flash("Access denied.", "danger")
         return redirect(url_for("dashboard"))
@@ -378,6 +416,10 @@ def delete_user(user_id):
 @app.route("/store")
 @login_required
 def store():
+    """
+    Student-only page for browsing items in the store.
+    Redirects staff back to dashboard.
+    """
     if current_user.is_staff:
         flash("Store is for students only.", "info")
         return redirect(url_for("dashboard"))
@@ -410,6 +452,10 @@ def store():
 @app.route("/order/<int:item_id>", methods=["GET", "POST"])
 @login_required
 def order_item(item_id):
+    """
+    Student-only page for ordering items in the store.
+    Redirects staff back to dashboard.
+    """
     if current_user.is_staff:
         flash("Only students can place orders.", "danger")
         return redirect(url_for("dashboard"))
@@ -454,6 +500,10 @@ def order_item(item_id):
 @app.route("/my-orders")
 @login_required
 def my_orders():
+    """
+    Student-only page for viewing their previous orders.
+    Redirects staff back to dashboard.
+    """
     if current_user.is_staff:
         flash("Staff accounts do not place orders.", "info")
         return redirect(url_for("dashboard"))
@@ -468,6 +518,10 @@ def my_orders():
 
 @app.context_processor
 def inject_nav_data():
+    """
+    Used to pass credit amount (or active order quantity if staff)
+    into the navbar for display.
+    """
     from models import Order, OrderStatus
 
     if current_user.is_authenticated:

@@ -2,6 +2,7 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 class Config:
     # Secret key used to keep session data and form submissions secure
     # In production, this should come from an environment variable

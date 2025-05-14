@@ -1,12 +1,13 @@
 from models import OrderStatus
 
+
 def get_next_status(current):
     flow = [
         OrderStatus.AWAITING.value,
         OrderStatus.CONFIRMED.value,
         OrderStatus.PREPARING.value,
         OrderStatus.READY.value,
-        OrderStatus.COMPLETED.value
+        OrderStatus.COMPLETED.value,
     ]
     try:
         index = flow.index(current)

@@ -6,45 +6,45 @@
 
 {% if orders %}
 <table class="table table-striped align-middle">
-  <thead>
-    <tr>
-      <th>Item</th>
-      <th>Quantity</th>
-      <th>Total Cost</th>
-      <th>Status</th>
-      <th>Ordered At</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for order in orders %}
-    <tr>
-      <td>{{ order.item.name }}</td>
-      <td>{{ order.quantity }}</td>
-      <td>${{ "{:.2f}".format(order.total_cost) }}</td>
-      <td>
-        {% if order.status == 'Awaiting Confirmation' %}
-          <span class="badge bg-warning text-dark">{{ order.status }}</span>
-        {% elif order.status == 'Confirmed' %}
-          <span class="badge bg-primary">{{ order.status }}</span>
-        {% elif order.status == 'Being Prepared' %}
-          <span class="badge bg-info text-dark">{{ order.status }}</span>
-        {% elif order.status == 'Ready For Pickup' %}
-          <span class="badge bg-success">{{ order.status }}</span>
-        {% elif order.status == 'Completed' %}
-          <span class="badge bg-secondary">{{ order.status }}</span>
-        {% elif order.status == 'Cancelled' %}
-          <span class="badge bg-danger">{{ order.status }}</span>
-        {% else %}
-          {{ order.status }}
-        {% endif %}
-      </td>
-      <td>{{ order.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Total Cost</th>
+            <th>Status</th>
+            <th>Ordered At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.item.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>${{ "{:.2f}".format(order.total_cost) }}</td>
+            <td>
+                {% if order.status == 'Awaiting Confirmation' %}
+                <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                {% elif order.status == 'Confirmed' %}
+                <span class="badge bg-primary">{{ order.status }}</span>
+                {% elif order.status == 'Being Prepared' %}
+                <span class="badge bg-info text-dark">{{ order.status }}</span>
+                {% elif order.status == 'Ready For Pickup' %}
+                <span class="badge bg-success">{{ order.status }}</span>
+                {% elif order.status == 'Completed' %}
+                <span class="badge bg-secondary">{{ order.status }}</span>
+                {% elif order.status == 'Cancelled' %}
+                <span class="badge bg-danger">{{ order.status }}</span>
+                {% else %}
+                {{ order.status }}
+                {% endif %}
+            </td>
+            <td>{{ order.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% else %}
-  <div class="alert alert-info">You haven’t placed any orders yet.</div>
+<div class="alert alert-info">You haven’t placed any orders yet.</div>
 {% endif %}
 
 {% endblock %}
