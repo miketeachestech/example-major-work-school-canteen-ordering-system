@@ -75,3 +75,4 @@
 - **Cart**: Students can add multiple items to a cart and then place one order for the cart's contents.
 - **Estimated Wait Time**: Staff can provide an estimated wait time when the order is changed to **Confirmed**.
 - **Performacne Dashboard**: Using something like **Plotly**, staff can see their performance metrics like how long it is taking to confirm orders.
+- **Auditing**: Record a log of when staff adds credit to a student etc. 

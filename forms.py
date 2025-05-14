@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from models import User
 
 
@@ -45,3 +45,8 @@ class EditAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError("This email is already registered.")
+
+class CreditForm(FlaskForm):
+    email = StringField("Student Email", validators=[DataRequired(), Email()])
+    amount = DecimalField("Credit Amount", validators=[DataRequired(), NumberRange(min=0.01, message="Amount must be positive")])
+    submit = SubmitField("Add Credit")

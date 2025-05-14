@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Add Credit{% endblock %}
+{% block content %}
+<h2>Add Credit to Student Account</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">{{ form.email.label }}{{ form.email(class="form-control") }}</div>
+  <div class="mb-3">{{ form.amount.label }}{{ form.amount(class="form-control") }}</div>
+  <button type="submit" class="btn btn-success">Add Credit</button>
+</form>
+{% endblock %}

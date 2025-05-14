@@ -3,4 +3,10 @@
 {% block content %}
 <h2>Welcome, {{ current_user.email }}!</h2>
 <p>This is your dashboard.</p>
+
+{% if not current_user.is_staff %}
+  <div class="alert alert-info">
+    Your current credit: <strong>${{ "{:.2f}".format(current_user.credit) }}</strong>
+  </div>
+{% endif %}
 {% endblock %}

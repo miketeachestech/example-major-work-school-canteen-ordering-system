@@ -8,7 +8,7 @@ from flask_login import (
 )
 
 from models import db, User
-from forms import RegisterForm, LoginForm, EditAccountForm
+from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm
 from config import Config
 from seed_db import seed_all
 
@@ -130,6 +130,26 @@ def users():
     # Show a list of all users in the system
     all_users = User.query.all()
     return render_template("users.html", users=all_users)
+
+
+@app.route("/credit", methods=["GET", "POST"])
+@login_required
+def credit():
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    form = CreditForm()
+    if form.validate_on_submit():
+        student = User.query.filter_by(email=form.email.data, is_staff=False).first()
+        if not student:
+            flash("Student not found or this person is not a student.", "danger")
+        else:
+            student.add_credit(form.amount.data)
+            db.session.commit()
+            flash(f"Added ${form.amount.data:.2f} to {student.email}'s account.", "success")
+            return redirect(url_for("credit"))
+    return render_template("credit.html", form=form)
 
 
 if __name__ == "__main__":
