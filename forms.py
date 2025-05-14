@@ -1,24 +1,12 @@
-# Import base form class from Flask-WTF
 from flask_wtf import FlaskForm
-
-# Import different types of form fields
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-
-# Import built-in validators for checking form input
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-
-# Import the User model to check for existing users during validation
 from models import User
 
 
 class RegisterForm(FlaskForm):
-    # Email field (required + must be a valid email format)
     email = StringField("Email", validators=[DataRequired(), Email()])
-
-    # Password field (required)
     password = PasswordField("Password", validators=[DataRequired()])
-
-    # Confirm password must match the 'password' field
     confirm_password = PasswordField(
         "Confirm Password",
         validators=[
@@ -27,7 +15,6 @@ class RegisterForm(FlaskForm):
         ],
     )
 
-    # Submit button
     submit = SubmitField("Register")
 
     # Custom validator: check if the email is already in use
@@ -38,21 +25,13 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    # Email field (required + must be valid format)
     email = StringField("Email", validators=[DataRequired(), Email()])
-
-    # Password field (required)
     password = PasswordField("Password", validators=[DataRequired()])
-
-    # Submit button
     submit = SubmitField("Login")
 
 
 class EditAccountForm(FlaskForm):
-    # Email field for updating the account (required + valid format)
     email = StringField("Email", validators=[DataRequired(), Email()])
-
-    # Submit button
     submit = SubmitField("Update")
 
     # Custom constructor — stores the original email to compare during validation

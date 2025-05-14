@@ -1,4 +1,3 @@
-# Import Flask and related modules
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import (
     LoginManager,
@@ -8,17 +7,14 @@ from flask_login import (
     current_user,
 )
 
-# Import your database model and forms
 from models import db, User
 from forms import RegisterForm, LoginForm, EditAccountForm
 from config import Config
 from seed_db import seed_default_users
 
-# Create the Flask app instance
 app = Flask(__name__)
 app.config.from_object(Config)  # Load settings like SECRET_KEY and DB path
 
-# Initialize the database with the app
 db.init_app(app)
 
 # Set up Flask-Login
@@ -78,7 +74,7 @@ def login():
         # Check if user exists and password is correct
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user)  # Log in the user (optionally with remember me)
+            login_user(user)
             return redirect(url_for("dashboard"))
         else:
             flash("Invalid email or password", "danger")
@@ -111,7 +107,6 @@ def account():
     # Prefill form with the current user's email
     form = EditAccountForm(original_email=current_user.email)
     if form.validate_on_submit():
-        # Update the user's email
         current_user.email = form.email.data
         db.session.commit()
         flash("Your account has been updated.", "success")

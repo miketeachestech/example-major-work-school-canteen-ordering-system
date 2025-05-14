@@ -3,57 +3,33 @@
 
 <head>
   <meta charset="utf-8">
-  <!-- This is the title that appears in the browser tab -->
   <title>{% block title %}Flask App Template{% endblock %}</title>
-  <!-- 
-    This is a Jinja "block". 
-    It's not real HTML. It's Python-based template code used by Flask.
-    Flask fills in this part with custom content defined in each page (like login.html or dashboard.html).
-  -->
-
-  <!-- The icon shown in the browser tab (called a favicon) -->
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
-  <!-- 
-    This is a Flask helper that creates the correct URL for static files or routes.
-    This avoids hardcoding file paths and works even if your app is deployed online.
-  -->
-
-  <!-- Bootstrap CSS: A popular styling library that makes your site look good quickly -->
-  <!-- Learn more: https://getbootstrap.com/ -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Your custom CSS file for adding styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-  <!-- Navigation bar (appears at the top of every page) -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container-fluid">
-      <!-- Logo and app name (clicking it takes you to the dashboard) -->
-      <!-- The CSS classes being applied like d-flex are from Bootstrap, e.g.: https://getbootstrap.com/docs/5.0/utilities/flex/ -->
       <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard') }}">
         <img src="{{ url_for('static', filename='images/logo-32-white.png') }}" alt="Logo" width="32" height="32"
           class="me-2">
         MyApp
       </a>
 
-      <!-- Hamburger button for small screens -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Menu items: shows different links depending on if the user is logged in -->
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto">
           {% if current_user.is_authenticated %}
-          <!-- This block only shows if a user is logged in -->
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('account') }}">Account</a>
           </li>
           {% if current_user.is_admin %}
-          <!-- Only admin users see this -->
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users') }}">Users</a>
           </li>
@@ -62,7 +38,6 @@
             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
           </li>
           {% else %}
-          <!-- These links show if no one is logged in -->
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
           </li>
@@ -75,9 +50,7 @@
     </div>
   </nav>
 
-  <!-- This is the main page content area -->
   <div class="container">
-    <!-- Flash messages show feedback to the user (like 'Account updated') -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
@@ -89,15 +62,9 @@
     {% endif %}
     {% endwith %}
 
-    <!-- Page-specific content is inserted here -->
     {% block content %}{% endblock %}
-    <!-- 
-      Each page (login.html, dashboard.html, etc.) will define what goes in this content block.
-      Flask uses Jinja templating to replace these blocks with real HTML when the page is loaded.
-    -->
   </div>
 
-  <!-- Bootstrap JavaScript: enables menu toggles, alerts, etc. -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

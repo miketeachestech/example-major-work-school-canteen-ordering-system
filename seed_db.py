@@ -1,4 +1,3 @@
-# Import the database instance and User model
 from models import db, User
 
 
