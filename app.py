@@ -347,6 +347,37 @@ def delete_user(user_id):
     flash(f"User '{user.email}' has been deleted.", "warning")
     return redirect(url_for("users"))
 
+@app.route("/store")
+@login_required
+def store():
+    if current_user.is_staff:
+        flash("Store is for students only.", "info")
+        return redirect(url_for("dashboard"))
+
+    # Read filter parameters from query string
+    name = request.args.get("name", "").strip()
+    min_price = request.args.get("min_price", type=float)
+    max_price = request.args.get("max_price", type=float)
+    min_quantity = request.args.get("min_quantity", type=int)
+    is_vegetarian = request.args.get("is_vegetarian") == "on"
+
+    # Base query
+    query = Item.query.filter(Item.quantity > 0)
+
+    if name:
+        query = query.filter(Item.name.ilike(f"%{name}%"))
+    if min_price is not None:
+        query = query.filter(Item.price >= min_price)
+    if max_price is not None:
+        query = query.filter(Item.price <= max_price)
+    if min_quantity is not None:
+        query = query.filter(Item.quantity >= min_quantity)
+    if is_vegetarian:
+        query = query.filter(Item.is_vegetarian == True)
+
+    items = query.order_by(Item.name).all()
+    return render_template("store.html", items=items)
+
 
 if __name__ == "__main__":
     """

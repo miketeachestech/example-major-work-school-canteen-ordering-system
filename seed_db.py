@@ -100,7 +100,7 @@ def seed_all():
     dest_dir = os.path.join(base_dir, "static", "uploads")
     os.makedirs(dest_dir, exist_ok=True)
 
-    for filename in ["veggie_sandwich.png", "chicken_wrap.png", "fruit_cup.png"]:
+    for filename in ["veggie_sandwich.png", "chicken_wrap.png", "fruit_cup.png", "default.png"]:
         src = os.path.join(src_dir, filename)
         dest = os.path.join(dest_dir, filename)
 

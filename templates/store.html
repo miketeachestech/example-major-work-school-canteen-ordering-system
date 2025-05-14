@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}CanteenEats - Store{% endblock %}
+{% block content %}
+
+<h2>Browse Items</h2>
+
+<form method="GET" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <input type="text" name="name" class="form-control" placeholder="Search by name" value="{{ request.args.get('name', '') }}">
+  </div>
+  <div class="col-md-2">
+    <input type="number" step="0.01" name="min_price" class="form-control" placeholder="Min Price" value="{{ request.args.get('min_price', '') }}">
+  </div>
+  <div class="col-md-2">
+    <input type="number" step="0.01" name="max_price" class="form-control" placeholder="Max Price" value="{{ request.args.get('max_price', '') }}">
+  </div>
+  <div class="col-md-2">
+    <input type="number" name="min_quantity" class="form-control" placeholder="Min Quantity" value="{{ request.args.get('min_quantity', '') }}">
+  </div>
+  <div class="col-md-2 form-check mt-2">
+    <input type="checkbox" name="is_vegetarian" class="form-check-input" id="vegCheck" {% if request.args.get('is_vegetarian') == 'on' %}checked{% endif %}>
+    <label class="form-check-label" for="vegCheck">Vegetarian</label>
+  </div>
+  <div class="col-md-1">
+    <button type="submit" class="btn btn-outline-primary w-100">Filter</button>
+  </div>
+</form>
+
+{% if items %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for item in items %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <img src="{{ url_for('static', filename='uploads/' + (item.image_filename or 'default.png')) }}"
+        class="card-img-top"
+        alt="{{ item.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">
+          Price: ${{ "{:.2f}".format(item.price) }}<br>
+          Available: {{ item.quantity }}<br>
+          {% if item.is_vegetarian %}<span class="badge bg-success">Vegetarian</span>{% endif %}
+        </p>
+        <!-- Placeholder: add order button later -->
+        <a href="#" class="btn btn-sm btn-outline-success disabled">Order (coming soon)</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+  <div class="alert alert-warning">No items match your filters.</div>
+{% endif %}
+
+{% endblock %}

@@ -2,8 +2,6 @@
 {% block title %}Manage Items{% endblock %}
 {% block content %}
 <h2>Item Management</h2>
-<a href="{{ url_for('add_item') }}" class="btn btn-primary mb-3">Add New Item</a>
-
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -39,4 +37,5 @@
     {% endfor %}
   </tbody>
 </table>
+<a href="{{ url_for('add_item') }}" class="btn btn-success mb-3">Add New Item</a>
 {% endblock %}
