@@ -8,6 +8,7 @@
       <th>ID</th>
       <th>Email</th>
       <th>Type</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +17,21 @@
       <td>{{ user.id }}</td>
       <td>{{ user.email }}</td>
       <td>{{ 'Staff' if user.is_staff else 'Student' }}</td>
+      <td>
+        {% if not user.is_staff %}
+        <form method="POST" action="{{ url_for('promote_user', user_id=user.id) }}" style="display:inline;">
+          <button class="btn btn-sm btn-success" type="submit">Promote</button>
+        </form>
+        {% endif %}
+        {% if user.id != current_user.id %}
+        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}"
+          onsubmit="return confirm('Are you sure you want to delete this user?');" style="display:inline;">
+          <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+        </form>
+        {% else %}
+        You can't delete yourself.
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </tbody>

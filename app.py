@@ -314,6 +314,42 @@ def manage_orders():
 
     return render_template("manage_orders.html", active_orders=active_orders, closed_orders_pagination=closed_orders_pagination)
 
+@app.route("/users/<int:user_id>/promote", methods=["POST"])
+@login_required
+def promote_user(user_id):
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    user = User.query.get_or_404(user_id)
+
+    if user.is_staff:
+        flash("User is already a staff member.", "info")
+    else:
+        user.is_staff = True
+        db.session.commit()
+        flash(f"User '{user.email}' has been promoted to staff.", "success")
+
+    return redirect(url_for("users"))
+
+@app.route("/users/<int:user_id>/delete", methods=["POST"])
+@login_required
+def delete_user(user_id):
+    if not current_user.is_staff:
+        flash("Access denied.", "danger")
+        return redirect(url_for("dashboard"))
+
+    user = User.query.get_or_404(user_id)
+
+    if user.id == current_user.id:
+        flash("You cannot delete your own account.", "danger")
+        return redirect(url_for("users"))
+
+    db.session.delete(user)
+    db.session.commit()
+    flash(f"User '{user.email}' has been deleted.", "warning")
+    return redirect(url_for("users"))
+
 
 if __name__ == "__main__":
     """

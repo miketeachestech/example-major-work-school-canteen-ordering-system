@@ -27,17 +27,17 @@ To be added.
 - [x] Credit management:
   - Add funds to student accounts
   - Only allow positive credit additions
-- [ ] Order management:
+- [x] Order management:
   - View all student orders
   - Update order status through full status flow
   - Cancel order (refund credit and restore item quantity)
-- [ ] Promote student accounts to staff
+- [x] Promote student accounts to staff
 
 ### Forms
-- [ ] `ItemForm` for staff to manage items
-- [ ] `CreditForm` for staff to top up student credit
+- [x] `ItemForm` for staff to manage items
+- [x] `CreditForm` for staff to top up student credit
 - [ ] `OrderForm` for students to place orders
-- [ ] `OrderStatusForm` for staff to update order status
+- [x] `OrderStatusForm` for staff to update order status
 
 ### Business Rule Enforcement
 - [x] Students cannot access `/users` or promote other accounts
