@@ -3,9 +3,10 @@
 ## General Rules
 
 1. **User Authentication**
-   - All users must log in using their school email and password.
+   - All users must log in using their email and password.
    - Passwords must be at least 8 characters long.
-   - Users without an account can register with their school email and password.
+   - All users cannot modify their own account details once created except to change their password.
+   - Users without an account can register with their email and password.
    - New accounts are automatically assigned the **student** role.
    - Only staff members can upgrade student accounts to staff.
 
@@ -16,7 +17,7 @@
 3. **Store Items**
    - Each item has a name, price, quantity, and is_vegetarian.
    - Quantity must be a non-negative integer.
-   - Items with zero quantity are visible to all users but cannot be purchased by students.
+   - Items with zero quantity are visible to staff but not students.
    - An order shall only contain one item up to any valid quantity.
 
 ## Staff Rules
@@ -27,17 +28,15 @@
 
 2. **Item Management**
    - Staff can add, edit, or delete items in the store.
-   - Edits may include name, price, or quantity.
    - Item prices must be non-negative.
 
 3. **Order Oversight**
    - Staff can view all orders placed by students.
-   - Orders can be marked as **Awaiting Confirmation**, **Confirmed**, **Being Prepared**, **Ready For Pickup**, **Completed** or **Cancelled**.
+   - Orders should be marked as **Awaiting Confirmation**, **Confirmed**, **Being Prepared**, **Ready For Pickup**, **Completed** or **Cancelled** depending on the stage they are in.
    - Cancelling an order refunds the full cost to the student’s credit and returns quantity to the item.
 
-4. **Account Permissions**
+4. **Account Control**
    - Staff can promote student accounts to staff.
-   - Staff can edit their own account details (e.g., name, password).
 
 ## Student Rules
 
@@ -59,7 +58,6 @@
 
 4. **Account Control**
    - Students cannot change their role or access other users' data.
-   - All users cannot change their own account details except to change their password.
 
 ## Additional Constraints
 
@@ -75,4 +73,5 @@
 - **Cart**: Students can add multiple items to a cart and then place one order for the cart's contents.
 - **Estimated Wait Time**: Staff can provide an estimated wait time when the order is changed to **Confirmed**.
 - **Performacne Dashboard**: Using something like **Plotly**, staff can see their performance metrics like how long it is taking to confirm orders.
-- **Auditing**: Record a log of when staff adds credit to a student etc. 
+- **Auditing**: The system records a log of when staff add credit to a student etc. 
+- **Extra Details**: The customer just wants something working ASAP, worry about additional fields like categorization and descriptions for food items later.

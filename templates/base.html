@@ -24,33 +24,45 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav"></ul>
+        {% if current_user.is_authenticated %}
+        {% if current_user.is_staff %}
+        <div class="navbar-text text-grey ms-3">
+          <em>Active Orders: <strong>{{ active_order_count }}</strong></em>
+        </div>
+        {% else %}
+        <div class="navbar-text text-grey ms-3">
+          <em>Available Credit: <strong>${{ "{:.2f}".format(student_credit) }}</strong></em>
+        </div>
+        {% endif %}
+        {% endif %}
         <ul class="navbar-nav ms-auto">
           {% if current_user.is_authenticated %}
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('dashboard') }}">Home</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('account') }}">Manage Account</a>
           </li>
           {% if current_user.is_staff %}
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('users') }}">View Users</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('credit') }}">Issue Credit</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('items') }}">Manage Items</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('manage_orders') }}">Manage Orders</a>
           </li>
           {% else %}
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('store') }}">View Store</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('my_orders') }}">My Orders</a>
           </li>
           {% endif %}
@@ -58,7 +70,7 @@
             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
           </li>
           {% else %}
-          <li class="nav-item">
+          <li class="nav-item me-2">
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
           </li>
           <li class="nav-item">

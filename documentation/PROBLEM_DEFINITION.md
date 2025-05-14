@@ -1,5 +1,3 @@
-# Problem Definition and Estimated Savings – School Canteen Ordering System
-
 ## Problem Definition
 
 The current school canteen ordering process is paper-based and handled manually at the counter. Students place orders by speaking to staff or writing them down, and staff manage these orders without a digital system.

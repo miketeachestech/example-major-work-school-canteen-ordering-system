@@ -76,8 +76,45 @@
   </div>
 
 {% else %}
-  <div class="alert alert-info mt-4">
+  <div class="alert alert-info mt-3">
     Your current credit: <strong>${{ "{:.2f}".format(current_user.credit) }}</strong>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+        <div class="card-body text-center">
+          <i class="fas fa-user-cog fa-2x mb-3 text-primary"></i>
+          <h5 class="card-title">Your Account</h5>
+          <p class="card-text">Change your password here.</p>
+          <a href="{{ url_for('account') }}" class="btn btn-primary">Manage Account</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+        <div class="card-body text-center">
+          <i class="fas fa-store fa-2x mb-3 text-success"></i>
+          <h5 class="card-title">Browse Store</h5>
+          <p class="card-text">Browse and order available canteen items.</p>
+          <a href="{{ url_for('store') }}" class="btn btn-success">Browse Store</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 bg-light hover-card">
+        <div class="card-body text-center">
+          <i class="fas fa-receipt fa-2x mb-3 text-warning"></i>
+          <h5 class="card-title">View Orders</h5>
+          <p class="card-text">View the status of your recent orders.</p>
+          <a href="{{ url_for('my_orders') }}" class="btn btn-warning">View Orders</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 {% endif %}
 

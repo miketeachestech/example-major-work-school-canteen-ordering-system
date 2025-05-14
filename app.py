@@ -8,7 +8,14 @@ from flask_login import (
 )
 
 from models import db, User, Item, Order, OrderStatus
-from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm, OrderForm
+from forms import (
+    RegisterForm,
+    LoginForm,
+    EditAccountForm,
+    CreditForm,
+    ItemForm,
+    OrderForm,
+)
 from config import Config
 from seed_db import seed_all
 import os
@@ -152,9 +159,13 @@ def credit():
         else:
             student.add_credit(form.amount.data)
             db.session.commit()
-            flash(f"Added ${form.amount.data:.2f} to {student.email}'s account.", "success")
+            flash(
+                f"Added ${form.amount.data:.2f} to {student.email}'s account.",
+                "success",
+            )
             return redirect(url_for("credit"))
     return render_template("credit.html", form=form)
+
 
 @app.route("/items")
 @login_required
@@ -189,7 +200,7 @@ def add_item():
             price=form.price.data,
             quantity=form.quantity.data,
             is_vegetarian=form.is_vegetarian.data,
-            image_filename=filename
+            image_filename=filename,
         )
         db.session.add(item)
         db.session.commit()
@@ -245,6 +256,7 @@ def file_too_large(error):
     flash("File is too large (max 2MB).", "danger")
     return redirect(request.referrer or url_for("dashboard"))
 
+
 @app.route("/items/<int:item_id>/delete", methods=["POST"])
 @login_required
 def delete_item(item_id):
@@ -278,17 +290,23 @@ def manage_orders():
         OrderStatus.AWAITING.value,
         OrderStatus.CONFIRMED.value,
         OrderStatus.PREPARING.value,
-        OrderStatus.READY.value
+        OrderStatus.READY.value,
     }
 
-    active_orders = Order.query.filter(Order.status.in_(active_statuses)).order_by(Order.timestamp.desc()).all()
+    active_orders = (
+        Order.query.filter(Order.status.in_(active_statuses))
+        .order_by(Order.timestamp.desc())
+        .all()
+    )
 
     # Pagination
     page = request.args.get("page", 1, type=int)
     closed_statuses = [OrderStatus.COMPLETED.value, OrderStatus.CANCELLED.value]
-    closed_orders_pagination = Order.query.filter(
-        Order.status.in_(closed_statuses)
-    ).order_by(Order.timestamp.desc()).paginate(page=page, per_page=5)
+    closed_orders_pagination = (
+        Order.query.filter(Order.status.in_(closed_statuses))
+        .order_by(Order.timestamp.desc())
+        .paginate(page=page, per_page=5)
+    )
 
     if request.method == "POST":
         order_id = int(request.form["order_id"])
@@ -304,12 +322,20 @@ def manage_orders():
             order.status = OrderStatus.CANCELLED.value
             order.user.credit += order.total_cost
             order.item.quantity += order.quantity
-            flash(f"Order #{order.id} cancelled. Credit refunded and stock restored.", "warning")
+            flash(
+                f"Order #{order.id} cancelled. Credit refunded and stock restored.",
+                "warning",
+            )
 
         db.session.commit()
         return redirect(url_for("manage_orders", page=page))
 
-    return render_template("manage_orders.html", active_orders=active_orders, closed_orders_pagination=closed_orders_pagination)
+    return render_template(
+        "manage_orders.html",
+        active_orders=active_orders,
+        closed_orders_pagination=closed_orders_pagination,
+    )
+
 
 @app.route("/users/<int:user_id>/promote", methods=["POST"])
 @login_required
@@ -329,6 +355,7 @@ def promote_user(user_id):
 
     return redirect(url_for("users"))
 
+
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
 @login_required
 def delete_user(user_id):
@@ -346,6 +373,7 @@ def delete_user(user_id):
     db.session.commit()
     flash(f"User '{user.email}' has been deleted.", "warning")
     return redirect(url_for("users"))
+
 
 @app.route("/store")
 @login_required
@@ -377,6 +405,7 @@ def store():
 
     items = query.order_by(Item.name).all()
     return render_template("store.html", items=items)
+
 
 @app.route("/order/<int:item_id>", methods=["GET", "POST"])
 @login_required
@@ -411,7 +440,7 @@ def order_item(item_id):
                     item_id=item.id,
                     quantity=qty,
                     total_cost=total_cost,
-                    status=OrderStatus.AWAITING.value
+                    status=OrderStatus.AWAITING.value,
                 )
 
                 db.session.add(order)
@@ -421,6 +450,7 @@ def order_item(item_id):
 
     return render_template("order_item.html", item=item, form=form)
 
+
 @app.route("/my-orders")
 @login_required
 def my_orders():
@@ -428,8 +458,33 @@ def my_orders():
         flash("Staff accounts do not place orders.", "info")
         return redirect(url_for("dashboard"))
 
-    orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.timestamp.desc()).all()
+    orders = (
+        Order.query.filter_by(user_id=current_user.id)
+        .order_by(Order.timestamp.desc())
+        .all()
+    )
     return render_template("my_orders.html", orders=orders)
+
+
+@app.context_processor
+def inject_nav_data():
+    from models import Order, OrderStatus
+
+    if current_user.is_authenticated:
+        if current_user.is_staff:
+            active_statuses = {
+                OrderStatus.AWAITING.value,
+                OrderStatus.CONFIRMED.value,
+                OrderStatus.PREPARING.value,
+                OrderStatus.READY.value,
+            }
+            active_order_count = Order.query.filter(
+                Order.status.in_(active_statuses)
+            ).count()
+            return {"active_order_count": active_order_count}
+        else:
+            return {"student_credit": current_user.credit}
+    return {}
 
 
 if __name__ == "__main__":
