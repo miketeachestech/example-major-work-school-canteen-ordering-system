@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 {% block title %}CanteenEats - Edit Account{% endblock %}
 {% block content %}
-  <h2>Edit Account</h2>
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-      {{ form.email.label }}
-      {{ form.email(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-success">Update</button>
-  </form>
+<h2>Change Password</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.current_password.label }}
+    {{ form.current_password(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.new_password.label }}
+    {{ form.new_password(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.confirm_password.label }}
+    {{ form.confirm_password(class="form-control") }}
+  </div>
+
+  <button type="submit" class="btn btn-success">Update Password</button>
+</form>
 {% endblock %}

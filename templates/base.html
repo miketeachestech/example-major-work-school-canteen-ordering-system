@@ -3,10 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}CanteenEats{% endblock %}</title>
+  <title>CanteenEats - {% block title %}Welcome{% endblock %}</title>
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -27,14 +28,17 @@
         <ul class="navbar-nav ms-auto">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('account') }}">Account</a>
+            <a class="nav-link" href="{{ url_for('dashboard') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('account') }}">Manage Account</a>
           </li>
           {% if current_user.is_staff %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users') }}">Users</a>
+            <a class="nav-link" href="{{ url_for('users') }}">View Users</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('credit') }}">Add Credit</a>
+            <a class="nav-link" href="{{ url_for('credit') }}">Issue Credit</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('items') }}">Manage Items</a>

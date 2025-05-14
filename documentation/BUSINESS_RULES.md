@@ -4,6 +4,7 @@
 
 1. **User Authentication**
    - All users must log in using their school email and password.
+   - Passwords must be at least 8 characters long.
    - Users without an account can register with their school email and password.
    - New accounts are automatically assigned the **student** role.
    - Only staff members can upgrade student accounts to staff.
@@ -58,8 +59,7 @@
 
 4. **Account Control**
    - Students cannot change their role or access other users' data.
-   - Students cannot change their email.
-   - Students can change their other account details (e.g. password).
+   - All users cannot change their own account details except to change their password.
 
 ## Additional Constraints
 

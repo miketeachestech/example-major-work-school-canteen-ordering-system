@@ -107,20 +107,17 @@ def dashboard():
 @app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
-    """
-    Allow the logged-in user to update their email.
-    - Shows a form prefilled with the current email.
-    - Validates and saves new email if submitted.
-    """
-    # Prefill form with the current user's email
-    form = EditAccountForm(original_email=current_user.email)
+    form = EditAccountForm()
+
     if form.validate_on_submit():
-        current_user.email = form.email.data
-        db.session.commit()
-        flash("Your account has been updated.", "success")
-        return redirect(url_for("account"))
-    elif request.method == "GET":
-        form.email.data = current_user.email  # Fill in the email when the page loads
+        if not current_user.check_password(form.current_password.data):
+            flash("Current password is incorrect.", "danger")
+        else:
+            current_user.set_password(form.new_password.data)
+            db.session.commit()
+            flash("Your password has been updated.", "success")
+            return redirect(url_for("account"))
+
     return render_template("edit_account.html", form=form)
 
 
