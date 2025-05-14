@@ -52,6 +52,7 @@ class Item(db.Model):
     price = db.Column(db.Numeric(10, 2), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     is_vegetarian = db.Column(db.Boolean, default=False)
+    image_filename = db.Column(db.String(255), nullable=True)
 
     orders = db.relationship("Order", backref="item", lazy=True)
 

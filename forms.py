@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from models import User
@@ -56,4 +57,5 @@ class ItemForm(FlaskForm):
     price = DecimalField("Price", validators=[DataRequired(), NumberRange(min=0)])
     quantity = IntegerField("Quantity", validators=[DataRequired(), NumberRange(min=0)])
     is_vegetarian = BooleanField("Vegetarian")
+    image = FileField("Item Image", validators=[FileAllowed(["jpg", "jpeg", "png"], "Images only!")])
     submit = SubmitField("Save Item")

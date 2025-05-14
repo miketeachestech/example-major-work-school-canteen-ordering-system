@@ -11,9 +11,16 @@ from models import db, User, Item
 from forms import RegisterForm, LoginForm, EditAccountForm, CreditForm, ItemForm
 from config import Config
 from seed_db import seed_all
+import os
+import uuid
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 app.config.from_object(Config)  # Load settings like SECRET_KEY and DB path
+
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db.init_app(app)
 
@@ -171,11 +178,20 @@ def add_item():
 
     form = ItemForm()
     if form.validate_on_submit():
+        filename = None
+        if form.image.data:
+            original_name = secure_filename(form.image.data.filename)
+            ext = os.path.splitext(original_name)[1]
+            filename = f"{uuid.uuid4().hex}{ext}"
+            image_path = os.path.join(UPLOAD_FOLDER, filename)
+            form.image.data.save(image_path)
+
         item = Item(
             name=form.name.data,
             price=form.price.data,
             quantity=form.quantity.data,
             is_vegetarian=form.is_vegetarian.data,
+            image_filename=filename
         )
         db.session.add(item)
         db.session.commit()
@@ -193,16 +209,43 @@ def edit_item(item_id):
 
     item = Item.query.get_or_404(item_id)
     form = ItemForm(obj=item)
+
     if form.validate_on_submit():
+        # Store old filename BEFORE updating it
+        old_filename = item.image_filename
+
+        if form.image.data:
+            # Delete old image if it exists
+            if old_filename:
+                old_path = os.path.join(UPLOAD_FOLDER, old_filename)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            # Save new image
+            original_name = secure_filename(form.image.data.filename)
+            ext = os.path.splitext(original_name)[1]
+            filename = f"{uuid.uuid4().hex}{ext}"
+            image_path = os.path.join(UPLOAD_FOLDER, filename)
+            form.image.data.save(image_path)
+            item.image_filename = filename
+
+        # Update other fields
         item.name = form.name.data
         item.price = form.price.data
         item.quantity = form.quantity.data
         item.is_vegetarian = form.is_vegetarian.data
+
         db.session.commit()
         flash("Item updated successfully.", "success")
         return redirect(url_for("items"))
+
     return render_template("item_form.html", form=form, action="Edit")
 
+
+@app.errorhandler(413)
+def file_too_large(error):
+    flash("File is too large (max 2MB).", "danger")
+    return redirect(request.referrer or url_for("dashboard"))
 
 @app.route("/items/<int:item_id>/delete", methods=["POST"])
 @login_required
@@ -212,10 +255,18 @@ def delete_item(item_id):
         return redirect(url_for("dashboard"))
 
     item = Item.query.get_or_404(item_id)
+
+    # Delete associated image if it exists
+    if item.image_filename:
+        image_path = os.path.join(UPLOAD_FOLDER, item.image_filename)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
     db.session.delete(item)
     db.session.commit()
     flash("Item deleted successfully.", "success")
     return redirect(url_for("items"))
+
 
 if __name__ == "__main__":
     """

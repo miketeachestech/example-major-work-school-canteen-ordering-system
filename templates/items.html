@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Image</th>
       <th>Price</th>
       <th>Quantity</th>
       <th>Vegetarian</th>
@@ -18,6 +19,13 @@
     {% for item in items %}
     <tr>
       <td>{{ item.name }}</td>
+      <td>
+        {% if item.image_filename %}
+            <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}" width="60" height="60">
+        {% else %}
+            No image
+        {% endif %}
+        </td>
       <td>${{ "{:.2f}".format(item.price) }}</td>
       <td>{{ item.quantity }}</td>
       <td>{{ 'Yes' if item.is_vegetarian else 'No' }}</td>

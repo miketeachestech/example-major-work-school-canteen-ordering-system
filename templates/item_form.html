@@ -2,11 +2,12 @@
 {% block title %}{{ action }} Item{% endblock %}
 {% block content %}
 <h2>{{ action }} Item</h2>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   <div class="mb-3">{{ form.name.label }}{{ form.name(class="form-control") }}</div>
   <div class="mb-3">{{ form.price.label }}{{ form.price(class="form-control") }}</div>
   <div class="mb-3">{{ form.quantity.label }}{{ form.quantity(class="form-control") }}</div>
+  <div class="mb-3">{{ form.image.label }}{{ form.image(class="form-control") }}</div>
   <div class="mb-3 form-check">{{ form.is_vegetarian(class="form-check-input") }} {{ form.is_vegetarian.label }}</div>
   <button type="submit" class="btn btn-success">{{ action }} Item</button>
 </form>

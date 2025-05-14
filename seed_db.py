@@ -1,6 +1,7 @@
 from models import db, User, Item, Order, OrderStatus
 from decimal import Decimal
-
+import os
+import shutil
 
 def create_user(email, password, is_staff=False):
     """Create a user if one with the given email doesn't already exist."""
@@ -73,8 +74,12 @@ def seed_default_users():
 
 def seed_items():
     item1 = create_item("Veggie Sandwich", "4.50", 10, is_vegetarian=True)
+    item1.image_filename = "veggie_sandwich.png"
     item2 = create_item("Chicken Wrap", "5.00", 8)
+    item2.image_filename = "chicken_wrap.png"
     item3 = create_item("Fruit Cup", "2.00", 15, is_vegetarian=True)
+    item3.image_filename = "fruit_cup.png"
+    db.session.commit()
     return item1, item2, item3
 
 
@@ -88,3 +93,21 @@ def seed_all():
     staff, student = seed_default_users()
     items = seed_items()
     seed_orders(student, items)
+
+    # Copy images if missing
+    base_dir = os.path.dirname(__file__)
+    src_dir = os.path.join(base_dir, "static", "examples")
+    dest_dir = os.path.join(base_dir, "static", "uploads")
+    os.makedirs(dest_dir, exist_ok=True)
+
+    for filename in ["veggie_sandwich.png", "chicken_wrap.png", "fruit_cup.png"]:
+        src = os.path.join(src_dir, filename)
+        dest = os.path.join(dest_dir, filename)
+
+        if not os.path.exists(dest):
+            try:
+                shutil.copyfile(src, dest)
+                print(f"Copied {filename} to uploads.")
+            except FileNotFoundError:
+                print(f"WARNING: {filename} not found in examples folder.")
+
