@@ -1,0 +1,1 @@
+# TODO: Your development diary should be detailed and professional, showing regular progress updates and clear problem-solving insights. Include well-formatted screenshots and relevant code snippets to support your entries. Make sure everything is easy to read and visually clear.

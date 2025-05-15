@@ -1,3 +1,5 @@
+# TODO: Your problem definition needs to clearly explain a specific problem and how your software will solve it. Make sure to outline the full scope of your project, any limitations, and give a brief overview of your solution. Be realistic; if the problem you’ve chosen is too ambitious, it could lead to an unmanageable or unrealistic project.
+
 ## Problem Definition
 
 The current school canteen ordering process is paper-based and handled manually at the counter. Students place orders by speaking to staff or writing them down, and staff manage these orders without a digital system.

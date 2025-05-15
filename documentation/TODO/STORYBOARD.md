@@ -1,0 +1,1 @@
+# TODO: Your storyboard needs to be detailed and easy to follow, showing a clear user journey and interface design. Use high-quality visuals to map out how users will interact with your software.

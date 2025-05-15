@@ -1,0 +1,1 @@
+# TODO: Your Data Flow Diagram (DFD) should be highly detailed and accurately show how data moves through your system. Use clear symbols and a logical layout to represent processes, data stores, and flows. Your DFD should have at least 2 processes and identify any required storage.

@@ -1,0 +1,1 @@
+# TODO: You need to clearly identify and explain both functional and non-functional requirements. Present them in a structured table so they're easy to read and understand. Make sure each requirement is specific and relevant to your project.

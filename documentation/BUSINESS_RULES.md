@@ -1,4 +1,4 @@
-# Business Rules – School Canteen Ordering System
+# TODO: Your business rules should be clearly defined and directly related to how your software operates. Write them in plain language so they’re easy to understand, outlining the conditions, constraints, or logic the system must follow. Avoid vague statements - each rule should be specific, relevant, and reflect real requirements of the system or user needs.
 
 ## General Rules
 
@@ -75,3 +75,4 @@
 - **Performacne Dashboard**: Using something like **Plotly**, staff can see their performance metrics like how long it is taking to confirm orders.
 - **Auditing**: The system records a log of when staff add credit to a student etc. 
 - **Extra Details**: The customer just wants something working ASAP, worry about additional fields like categorization and descriptions for food items later.
+- **Automated Testing**: Manual testing is sufficient for this project, but automated testing would be worthwhile introducing in the future.
