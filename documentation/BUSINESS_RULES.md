@@ -1,5 +1,3 @@
-# TODO: Your business rules should be clearly defined and directly related to how your software operates. Write them in plain language so they’re easy to understand, outlining the conditions, constraints, or logic the system must follow. Avoid vague statements - each rule should be specific, relevant, and reflect real requirements of the system or user needs.
-
 ## General Rules
 
 1. **User Authentication**

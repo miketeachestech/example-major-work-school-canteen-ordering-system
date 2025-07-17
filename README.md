@@ -1,6 +1,6 @@
 # CanteenEats – School Canteen Ordering System
 
-CanteenEats is a Flask-based web application that digitizes the school canteen experience. It allows students to browse a live canteen menu, place orders with their prepaid credit, and track order status — while staff can manage users, credit, menu items, and fulfill orders. It was built from [my flask project template,](https://github.com/miketeachestech/hsc-software-engineering-flask-project-template) to demonstrate what a major work submission might look like for a Year 12 student undertaking the NESA HSC Software Engineering course.
+CanteenEats is a Flask-based web application that digitizes the school canteen experience. It allows students to browse a live canteen menu, place orders with their prepaid credit, and track order status — while staff can manage users, credit, menu items, and fulfill orders. It was built from [my flask project template,](https://github.com/miketeachestech/hsc-software-engineering-flask-project-template) to demonstrate what a major work submission might look like for a Year 12 student undertaking the NESA HSC Software Engineering course (at this stage, not including all the documentation associated with it).
 
 ## Screenshots
 ![Screenshot of student store view](./screenshots/student-store-view.jpg)
@@ -98,6 +98,10 @@ python app.py
 | Student| lisa@school.com            | lisa123    |
 | Student| bart@school.com            | bart123    |
 | Student| maggie@school.com          | maggie123  |
+
+## Other Notes
+
+You might be wondering why RESTful design hasn't been strictly followed (e.g. using the appropriate HTTP verbs like DELETE when sending a request to delete a record). For simplicity, all form submissions in this project use POST or GET, even for actions like deleting items. While it's possible to simulate other HTTP methods (like DELETE or PUT) by using a hidden _method field and overriding the request method server-side, this adds extra complexity without much benefit in this case. Since standard HTML forms don’t support anything beyond GET and POST, sticking with those keeps the code cleaner and easier to maintain. 
 
 ## License
 

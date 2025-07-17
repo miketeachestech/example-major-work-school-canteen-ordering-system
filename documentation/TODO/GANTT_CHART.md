@@ -1,1 +1,0 @@
-# TODO: Your Gantt chart needs to be well-organized, with clear timelines, defined milestones, and a logical order of tasks. Only include development-related work; don’t pad it with unrelated items like general planning or idea generation (unless your teacher has asked you to).

@@ -1,3 +1,0 @@
-# TODO: Your installation guide should include clear, step-by-step instructions that are easy to follow. Make sure all required components are listed, and include screenshots where they help explain a step. The installation method you choose should make sense for your application and work smoothly for the end user.
-
-# TODO: As a bonus task, show what this might look like if the front-end, back-end and database were separate microservices deployed to the cloud rather than a monolith on one local machine.

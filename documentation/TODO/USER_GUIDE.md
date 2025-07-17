@@ -1,1 +1,0 @@
-# TODO: Your user guide should be written for everyday users, not developers—keep the language simple and avoid technical jargon. Start with clear instructions on how to install and run the program. Use screenshots where they help make steps easier to follow, and make sure the guide walks users through the main features of the software in a straightforward way.

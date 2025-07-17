@@ -1,1 +1,0 @@
-# TODO: This can be represented as either psueodcode or flowcharts. Your algorithms should be clearly written, showing advanced logic and strong problem-solving skills. They need to run efficiently and be free of errors. Focus on clarity, structure, and how well they handle complex tasks or edge cases. In implementation, ensure your code has readability and safety in mind. 
